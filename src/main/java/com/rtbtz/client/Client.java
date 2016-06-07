@@ -14,9 +14,12 @@ import java.util.logging.Logger;
  * @author Petr
  */
 public class Client extends LowLevelClient {
-
+    //During this period client should show some activity
+    public static final int MIN_ACTIVITY_DELAY = 1000;
+    
     private static String welcomeMessage = "Welcome to Chat 1.0, type /help to help yourself!";
     private String login;
+    
     private int activityDelay = 5000;
 
     public Client(Socket sock, int activityDelay) throws Exception {
@@ -87,15 +90,17 @@ public class Client extends LowLevelClient {
         kick();
     }
 
+    //Get a period when client should show some activity
     synchronized public int getActivityDelay() {
-        if (activityDelay < 1000) {
-            activityDelay = 1000;
-        }
-
         return activityDelay;
     }
 
+    //Set a period when client should show some activity
     synchronized public void setActivityDelay(int activityDelay) {
+        if (activityDelay < MIN_ACTIVITY_DELAY) {
+            activityDelay = MIN_ACTIVITY_DELAY;
+        }
+        
         this.activityDelay = activityDelay;
     }
 
