@@ -28,18 +28,18 @@ public abstract class LowLevelClient extends Thread{
         }
     }
     
-    protected BufferedReader GetClientInput(){
+    protected BufferedReader getClientInput(){
         return clientIn;
     }
     
     //Sends text message to a client
-    synchronized public void SendMessage(String message) {
+    synchronized public void sendMessage(String message) {
         clientOut.println(message);
         clientOut.flush();
     }
 
     //Closes connection
-    protected void CloseConnection() throws IOException {
+    protected void closeConnection() throws IOException {
         clientIn.close();
         clientOut.close();
         clientSocket.close();

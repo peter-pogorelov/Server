@@ -7,9 +7,13 @@ import com.rtbtz.client.Client;
  * Displays information about other commands
  * @author Petr
  */
-public class CommandHelp implements Command {
+public class CommandHelp extends Command {
+    public CommandHelp(){
+        super("show number of active users");
+    }
+    
     @Override
     public void exec(Client client, String info) throws IOException {
-        client.SendMessage(CommandFactory.getInstance().getCommandsInformation());
+        client.sendMessage(CommandFactory.getInstance().getCommandsInformation());
     }
 }

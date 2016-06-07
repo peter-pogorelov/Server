@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.003" errors="0" skipped="0" tests="4" name="com.rtbz.other.ChatHistoryTest">
+<testsuite failures="0" time="0.002" errors="0" skipped="0" tests="5" name="com.rtbz.other.ChatHistoryTest">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files (x86)\Java\jdk1.7.0_55\jre\bin"/>
@@ -29,7 +29,7 @@
     <property name="maven.ext.class.path" value="C:\Program Files (x86)\NetBeans 8.1\java\maven-nblib\netbeans-eventspy.jar"/>
     <property name="classworlds.conf" value="C:\Program Files (x86)\NetBeans 8.1\java\maven\bin\m2.conf"/>
     <property name="sun.jnu.encoding" value="Cp1251"/>
-    <property name="java.library.path" value="C:\Program Files (x86)\Java\jdk1.7.0_55\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\system32\config\systemprofile\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files (x86)\Skype\Phone\;C:\Program Files (x86)\Microsoft Emulator Manager\1.0\;C:\Users\Petr\Anaconda3;C:\Users\Petr\Anaconda3\Scripts;C:\Users\Petr\Anaconda3\Library\bin;C:\Users\Petr\AppData\Local\Programs\Python\Python35-32\Scripts\;C:\Users\Petr\AppData\Local\Programs\Python\Python35-32\;C:\Users\Petr\AppData\Local\atom\bin;."/>
+    <property name="java.library.path" value="C:\Program Files (x86)\Java\jdk1.7.0_55\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Users\Petr\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files (x86)\Skype\Phone\;C:\Program Files (x86)\Microsoft Emulator Manager\1.0\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Users\Petr\AppData\Local\Programs\Python\Python35-32\Scripts\;C:\Users\Petr\AppData\Local\Programs\Python\Python35-32\;&quot;C:\Program Files (x86)\Java\jdk1.7.0_55\bin&quot;;C:\Users\Petr\AppData\Roaming\npm;C:\Users\Petr\AppData\Local\atom\bin;."/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="51.0"/>
     <property name="sun.management.compiler" value="HotSpot Client Compiler"/>
@@ -61,8 +61,9 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="pentium_pro+mmx pentium_pro pentium+mmx pentium i486 i386 i86"/>
   </properties>
-  <testcase time="0" classname="com.rtbz.other.ChatHistoryTest" name="testGetLastN3"/>
-  <testcase time="0" classname="com.rtbz.other.ChatHistoryTest" name="testGetLastN1"/>
   <testcase time="0" classname="com.rtbz.other.ChatHistoryTest" name="testGetLastN2"/>
   <testcase time="0" classname="com.rtbz.other.ChatHistoryTest" name="testGetLastN0"/>
+  <testcase time="0" classname="com.rtbz.other.ChatHistoryTest" name="testGetLastN3"/>
+  <testcase time="0" classname="com.rtbz.other.ChatHistoryTest" name="testGetLastN1"/>
+  <testcase time="0" classname="com.rtbz.other.ChatHistoryTest" name="testGetLastN4"/>
 </testsuite>

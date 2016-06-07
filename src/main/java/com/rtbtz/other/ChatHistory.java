@@ -8,9 +8,19 @@ import java.util.List;
  * @author Petr
  */
 public class ChatHistory {
+    private int size = 100; //Default size of chat history
     private static ChatHistory instance;
-    private List<String> messages = new ArrayList<>();
-    private ChatHistory(){}
+    private RingBuffer buff;
+    
+    private ChatHistory(){
+        buff = new RingBuffer(size);
+    }
+    
+    //Change buffer size but save previous messages
+    synchronized public void resize(int size){
+        this.size = size;
+        buff = new RingBuffer(buff, size);
+    }
     
     synchronized public static ChatHistory getInstance() {
         if(instance == null)
@@ -19,25 +29,22 @@ public class ChatHistory {
     }
     
     synchronized  public void addMessage(String message){
-        messages.add(message);
+        buff.push(message);
     }
     
+    //This method is only used in tests!
     synchronized public void clear(){
-        messages.clear();
+        buff = new RingBuffer(size);
     }
     
-    //Returns last N messages in history
-    synchronized public String getLastN(int N){
-        int startPos = 0;
-        if(messages.size() > N) {
-            startPos = messages.size() - N;
-        }
-        
+    //Returns last <size> messages in history
+    synchronized public String getLastMessages(){
         StringBuilder build = new StringBuilder();
         
-        for(int i = startPos; i < messages.size(); ++i){
-            build.append(messages.get(i));
-            if(i < messages.size() - 1){
+        buff.reset();
+        for(int i = 0; i < buff.getLength(); i++){
+            build.append(buff.getNext());
+            if(i < buff.getLength() - 1){
                 build.append("\n");
             }
         }

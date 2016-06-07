@@ -8,10 +8,16 @@ import com.rtbtz.client.ClientPool;
  * Allows client to exit a chat
  * @author Petr
  */
-public class CommandQuit implements Command {
+public class CommandQuit extends Command {
+    public CommandQuit(){
+        super("leave the conversation");
+    }
+        
     @Override
     synchronized public void exec(Client client, String info) throws IOException {
-        ClientPool.getInstance().SendMessageToOthers(client, client.getLogin() + " has left a conversation.");
-        client.Kick();
+        if(client.isLogged()){
+            ClientPool.getInstance().sendMessageToOthers(client, client.getLogin() + " has left a conversation.");
+        }
+        client.kick();
     }
 }

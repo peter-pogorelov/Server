@@ -5,6 +5,8 @@ import com.rtbtz.commands.CommandFactory;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Main server class
@@ -32,10 +34,9 @@ public class MCServer {
                 sock = serverSock.accept();
                 System.out.println("Client connected!");
                 ClientPool.getInstance().addNewClient(sock);
-            } catch (IOException ex) {
-                System.out.println("Error in client in client command.");
             } catch (Exception ex) {
-                throw new Error("Critical Error. Systems shutting down.");
+                //Record an exception and continue execution
+                Logger.getLogger(MCServer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

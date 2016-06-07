@@ -8,9 +8,9 @@ import java.util.Map;
  * @author Petr
  */
 public class CommandFactory {
+    public static int PARAM_CMD = 0, PARAM_INFO = 1;
     public static CommandFactory instance = null;
     private Map<String, Command> commands = new HashMap<>();
-    private Map<String, String> descriptions = new HashMap<>();
     
     private CommandFactory(){}
     
@@ -23,15 +23,13 @@ public class CommandFactory {
     }
     
     //Registers new command
-    synchronized public void registerNewCommand(String cmd, String description, Command command){
+    synchronized public void registerNewCommand(String cmd, Command command){
         commands.put(cmd, command);
-        descriptions.put(cmd, description);
     }
     
     //Returns command by its cmd
     synchronized public Command commandFactory(String cmd) {
         Command result = null;
-        
         result = commands.get(cmd);
         
         return result;
@@ -40,48 +38,42 @@ public class CommandFactory {
     //Returns a description of command
     synchronized public String getCommandsInformation(){
         StringBuilder info = new StringBuilder();
-        for(Map.Entry<String, String> it : descriptions.entrySet()){
-            info.append(it.getKey()).append(" - ").append(it.getValue()).append(".\n");
+        for(Map.Entry<String, Command> it : commands.entrySet()){
+            info.append(it.getKey()).append(" - ").append(it.getValue().getDescription()).append(".\n");
         }
         
         return info.toString();
     }
     
-    //Returns cmd from clients responce
-    public static String getCmdFromResponce(String command){
+    /**
+     * Method returns pair of command params: command itself and additional information
+     * @param command
+     * @return pair of value in array of string (0 - cmd, 1 - info)
+     */
+    public static String[] getParamsFromResponce(String command){
         command = command.trim();
+        String[] params = new String[2];
         
         if(command.length() > 0 && command.charAt(0) == '/'){
             int lastSpace = command.indexOf(" ");
             if(lastSpace == -1){
-                return command;
+                params[0] = command;
+                params[1] = ""; //Empty parameters
+                return params;
             }
-            String cmd = command.substring(0, lastSpace);
-            return cmd;
+            params[0] = command.substring(0, lastSpace);
+            params[1] = command.substring(lastSpace + 1);
+            return params;
         }
         
-        return "";
-    }
-    
-    //Returns command information from clients responce
-    public static String getInfoFromResponce(String command) {
-        command = command.trim();
-        if(command.length() > 0 && command.charAt(0) == '/'){
-            int lastSpace = command.indexOf(" ");
-            if(lastSpace == -1){
-                return "";
-            }
-            String cmd = command.substring(lastSpace + 1);
-            return cmd;
-        }
-        return "";
+        return null;
     }
     
     public static void registerCommands(){
-        CommandFactory.getInstance().registerNewCommand("/count", "show number of active users", new CommandCount());
-        CommandFactory.getInstance().registerNewCommand("/help", "output help information", new CommandHelp());
-        CommandFactory.getInstance().registerNewCommand("/say", "print message to chat", new CommandSay());
-        CommandFactory.getInstance().registerNewCommand("/quit", "leave the conversation", new CommandQuit());
-        CommandFactory.getInstance().registerNewCommand("/login", "login to chat", new CommandLogin());
+        CommandFactory.getInstance().registerNewCommand("/count", new CommandCount());
+        CommandFactory.getInstance().registerNewCommand("/help", new CommandHelp());
+        CommandFactory.getInstance().registerNewCommand("/say", new CommandSay());
+        CommandFactory.getInstance().registerNewCommand("/quit", new CommandQuit());
+        CommandFactory.getInstance().registerNewCommand("/login", new CommandLogin());
     }
 }

@@ -10,23 +10,18 @@ import org.junit.Test;
  */
 public class CommandFactoryTest extends Assert {
     @Test
-    public void testGetCommandsInformation(){
-        
-    }
-    
-    @Test
-    public void testGetCmdFromResponce(){
-        assertEquals("/hey", CommandFactory.getCmdFromResponce("/hey asd asd asd"));
-        assertEquals("", CommandFactory.getCmdFromResponce(""));
-        assertEquals("", CommandFactory.getCmdFromResponce("asd asd"));
-        assertEquals("/hey", CommandFactory.getCmdFromResponce("/hey"));
+    public void testGetCMDFromResponce(){
+        assertEquals("/hey", CommandFactory.getParamsFromResponce("/hey asd asd asd")[0]);
+        assertNull(CommandFactory.getParamsFromResponce(""));
+        assertNull(CommandFactory.getParamsFromResponce("asd asd"));
+        assertEquals("/hey", CommandFactory.getParamsFromResponce("/hey")[0]);
     }
     
     @Test
     public void testGetInfoFromResponce() {
-        assertEquals("", CommandFactory.getInfoFromResponce(""));
-        assertEquals("", CommandFactory.getInfoFromResponce("/hey     "));
-        assertEquals("", CommandFactory.getInfoFromResponce("asd /hey     "));
-        assertEquals("/hey /hey", CommandFactory.getInfoFromResponce("/hey /hey /hey    "));
+        assertNull(CommandFactory.getParamsFromResponce(""));
+        assertEquals("", CommandFactory.getParamsFromResponce("/hey     ")[1]);
+        assertNull(CommandFactory.getParamsFromResponce("asd /hey     "));
+        assertEquals("/hey /hey", CommandFactory.getParamsFromResponce("/hey /hey /hey    ")[1]);
     }
 }

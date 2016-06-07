@@ -47,19 +47,19 @@ public class ClientPool {
         while(it.hasNext()){
             Client client = it.next();
             if(client.isLogged()){
-                client.SendMessage((String)message);
+                client.sendMessage((String)message);
             }
         }
     }
     
     //Sends messages for all clients but specified client
-    synchronized public void SendMessageToOthers(Client self, String message) {
+    synchronized public void sendMessageToOthers(Client self, String message) {
         Iterator<Client> it = pool.iterator();
         while(it.hasNext()){
             Client client = it.next();
             if(client != self){
                 if(client.isLogged()){
-                    client.SendMessage((String)message);
+                    client.sendMessage((String)message);
                 }
             }
         }

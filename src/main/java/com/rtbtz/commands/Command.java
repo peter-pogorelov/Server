@@ -8,6 +8,20 @@ import com.rtbtz.client.Client;
  * Some abstract command
  * @author Petr
  */
-public interface Command extends Serializable {
-    public void exec(Client client, String info) throws IOException ; //Метод переопределяется в остальных классах
+public abstract class Command implements Serializable {
+    private String description;
+    
+    public Command(String description){
+        this.description = description;
+    }
+    
+    public abstract void exec(Client client, String info) throws IOException ; //Метод переопределяется в остальных классах
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

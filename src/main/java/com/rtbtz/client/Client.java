@@ -9,60 +9,58 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Wrapper for LowLevelClient with reading loop and some
- * useful methods
+ * Wrapper for LowLevelClient with reading loop and some useful methods
+ *
  * @author Petr
  */
-
 public class Client extends LowLevelClient {
+
     private static String welcomeMessage = "Welcome to Chat 1.0, type /help to help yourself!";
     private String login;
     private int activityDelay = 5000;
 
-    
     public Client(Socket sock, int activityDelay) throws Exception {
         super(sock);
         this.activityDelay = activityDelay;
     }
 
     /**
-     * Interceptiong client activity in different thread
-    */
+     * Intercepting client activity in different thread
+     */
     @Override
     public void run() {
         setTimeout(getActivityDelay()); //Client should show some activity within specified time
-        SendMessage(welcomeMessage); //Send client welcome message
+        sendMessage(welcomeMessage); //Send client welcome message
         for (;;) {
             try {
-                if(!isConnected()){
+                if (!isConnected()) {
                     break;
                 }
-                
-                String line = GetClientInput().readLine();
-                String cmd = CommandFactory.getCmdFromResponce(line);
-                String info = CommandFactory.getInfoFromResponce(line);
-                Command command = CommandFactory.getInstance().commandFactory(cmd);
-                
-                if (command != null) {
-                    command.exec(this, info);
-                } else {
-                    SendMessage("Unknown command [" + line + "].");
+
+                String line = getClientInput().readLine();
+                String[] params = CommandFactory.getParamsFromResponce(line);
+
+                if (params != null) {
+                    Command command = CommandFactory.getInstance().commandFactory(params[CommandFactory.PARAM_CMD]);
+
+                    if (command != null) {
+                        command.exec(this, params[CommandFactory.PARAM_INFO]);
+                    } else {
+                        sendMessage("Unknown command [" + line + "].");
+                    }
                 }
-            } 
-            catch (SocketTimeoutException e) { //If client was unactive for some time
-                try{
-                    KickWithMessage("You have been kicked due to unactivity.");
+            } catch (SocketTimeoutException e) { //If client was unactive for some time
+                try {
+                    kickWithMessage("You have been kicked due to unactivity.");
+                    break;
+                } catch (IOException iex) {
+                    Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, iex);
+                    kick();
                     break;
                 }
-                catch(IOException iex){
-                    System.out.println(iex.getMessage());
-                    Kick();
-                    break;
-                }
-            }
-            catch (Exception ex) {
-                System.out.println("Something went wrong: " + ex.getMessage());
-                Kick();
+            } catch (Exception ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+                kick();
                 break;
             }
         }
@@ -71,9 +69,9 @@ public class Client extends LowLevelClient {
     /**
      * Disconnects a client
      */
-    public void Kick() {
+    public void kick() {
         try {
-            CloseConnection();
+            closeConnection();
             ClientPool.getInstance().removeClient(this);
             if (isLogged()) { //If client wasnt logged no message
                 ClientPool.getInstance().SendMessageToAll(login + " has left.");
@@ -83,24 +81,24 @@ public class Client extends LowLevelClient {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void KickWithMessage(String message) throws IOException{
-        SendMessage(message);
-        Kick();
+
+    public void kickWithMessage(String message) throws IOException {
+        sendMessage(message);
+        kick();
     }
 
     synchronized public int getActivityDelay() {
-        if(activityDelay < 1000) {
-            setActivityDelay(1000);
+        if (activityDelay < 1000) {
+            activityDelay = 1000;
         }
-        
+
         return activityDelay;
     }
 
     synchronized public void setActivityDelay(int activityDelay) {
         this.activityDelay = activityDelay;
     }
-    
+
     synchronized public boolean isLogged() {
         return getLogin() != null;
     }
@@ -112,7 +110,7 @@ public class Client extends LowLevelClient {
     synchronized public void setLogin(String login) {
         this.login = login;
     }
-    
+
     synchronized public static String getWelcomeMessage() {
         return welcomeMessage;
     }

@@ -11,33 +11,8 @@ import org.junit.Test;
 public class ChatHistoryTest extends Assert {
     @Test
     public void testGetLastN0 (){
-        ChatHistory.getInstance().addMessage("a");
-        ChatHistory.getInstance().addMessage("b");
-        ChatHistory.getInstance().addMessage("c");
-        ChatHistory.getInstance().addMessage("d");
-        ChatHistory.getInstance().addMessage("e");
-        ChatHistory.getInstance().addMessage("f");
         ChatHistory.getInstance().clear();
-        assertEquals("", ChatHistory.getInstance().getLastN(100));
-    }
-    
-    @Test
-    public void testGetLastN1 (){
-        ChatHistory.getInstance().clear();
-        assertEquals("", ChatHistory.getInstance().getLastN(-100));
-        assertEquals("", ChatHistory.getInstance().getLastN(0));
-        assertEquals("", ChatHistory.getInstance().getLastN(100));
-    }
-    
-    @Test
-    public void testGetLastN2 (){
-        ChatHistory.getInstance().clear();
-        assertEquals("", ChatHistory.getInstance().getLastN(0));
-    }
-    
-    @Test
-    public void testGetLastN3 (){
-        ChatHistory.getInstance().clear();
+        ChatHistory.getInstance().resize(5);
         
         ChatHistory.getInstance().addMessage("a");
         ChatHistory.getInstance().addMessage("b");
@@ -47,9 +22,60 @@ public class ChatHistoryTest extends Assert {
         ChatHistory.getInstance().addMessage("f");
         
         String result = "b\nc\nd\ne\nf";
-        String result1 = "a\nb\nc\nd\ne\nf";
+        assertEquals(result, ChatHistory.getInstance().getLastMessages());
+    }
+    
+    @Test
+    public void testGetLastN1 (){
+        ChatHistory.getInstance().clear();
+        ChatHistory.getInstance().resize(5);
         
-        assertEquals(result, ChatHistory.getInstance().getLastN(5));
-        assertEquals(result1, ChatHistory.getInstance().getLastN(100));
+        String result = "";
+        assertEquals(result, ChatHistory.getInstance().getLastMessages());
+    }
+    
+    @Test
+    public void testGetLastN2 (){
+        ChatHistory.getInstance().clear();
+        ChatHistory.getInstance().resize(5);
+        ChatHistory.getInstance().addMessage("a");
+        ChatHistory.getInstance().addMessage("b");
+        ChatHistory.getInstance().addMessage("c");
+        ChatHistory.getInstance().addMessage("d");
+        
+        String result = "a\nb\nc\nd";
+        assertEquals(result, ChatHistory.getInstance().getLastMessages());
+    }
+    
+    @Test
+    public void testGetLastN3(){
+        ChatHistory.getInstance().clear();
+        ChatHistory.getInstance().resize(3);
+        ChatHistory.getInstance().addMessage("a");
+        ChatHistory.getInstance().addMessage("b");
+        ChatHistory.getInstance().addMessage("c");
+        ChatHistory.getInstance().addMessage("d");
+        
+        String result = "b\nc\nd";
+        
+        ChatHistory.getInstance().resize(5);
+        assertEquals(result, ChatHistory.getInstance().getLastMessages());
+    }
+    
+    @Test
+    public void testGetLastN4(){
+        ChatHistory.getInstance().clear();
+        ChatHistory.getInstance().resize(3);
+        ChatHistory.getInstance().addMessage("a");
+        ChatHistory.getInstance().addMessage("b");
+        ChatHistory.getInstance().addMessage("c");
+        ChatHistory.getInstance().addMessage("d");
+        
+        ChatHistory.getInstance().resize(5);
+        ChatHistory.getInstance().addMessage("e");
+        
+        String result = "b\nc\nd\ne";
+        
+        assertEquals(result, ChatHistory.getInstance().getLastMessages());
     }
 }
