@@ -16,10 +16,8 @@ import java.util.logging.Logger;
 public class Client extends LowLevelClient {
     //During this period client should show some activity
     public static final int MIN_ACTIVITY_DELAY = 1000;
-    
-    private static String welcomeMessage = "Welcome to Chat 1.0, type /help to help yourself!";
+    private static final String welcomeMessage = "Welcome to Chat 1.0, type /help to help yourself!";
     private String login;
-    
     private int activityDelay = 5000;
 
     public Client(Socket sock, int activityDelay) throws Exception {
@@ -118,9 +116,5 @@ public class Client extends LowLevelClient {
 
     synchronized public static String getWelcomeMessage() {
         return welcomeMessage;
-    }
-
-    synchronized public static void setWelcomeMessage(String aWelcomeMessage) {
-        welcomeMessage = aWelcomeMessage;
     }
 }
