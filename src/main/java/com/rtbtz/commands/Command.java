@@ -8,7 +8,7 @@ import com.rtbtz.client.Client;
  * Some abstract command
  * @author Petr
  */
-public abstract class Command implements Serializable {
+public abstract class Command {
     private String description;
     
     public Command(String description){
